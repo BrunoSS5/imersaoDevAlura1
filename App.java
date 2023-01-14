@@ -39,7 +39,7 @@ public class App {
 //			
 //			var geradora = new GeradoraDeFigurinhas();
 //			geradora.cria(inputStream, nomeArquivo);
-			
+			System.out.println("Teste");
 			System.out.println(titulo);
 			System.out.println();	
 		}
