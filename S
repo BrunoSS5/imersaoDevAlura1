@@ -1,0 +1,172 @@
+[33mcommit 47971f07f7c26d896111736ab0abab71074a28a9[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Bruno Santos <pedrobruno01994@gmail.com>
+Date:   Sat Jan 14 15:36:31 2023 -0300
+
+    Adicionando os arquivos da imersão dev da Alura.
+
+[1mdiff --git a/App.java b/App.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..873a7fe[m
+[1m--- /dev/null[m
+[1m+++ b/App.java[m
+[36m@@ -0,0 +1,49 @@[m
+[32m+[m[32mpackage br.com.modelo;[m
+[32m+[m
+[32m+[m[32mimport java.net.URI;[m
+[32m+[m[32mimport java.net.http.HttpClient;[m
+[32m+[m[32mimport java.net.http.HttpRequest;[m
+[32m+[m[32mimport java.net.http.HttpResponse;[m
+[32m+[m[32mimport java.net.http.HttpResponse.BodyHandlers;[m
+[32m+[m[32mimport java.util.List;[m
+[32m+[m[32mimport java.util.Map;[m
+[32m+[m
+[32m+[m[32mpublic class App {[m
+[32m+[m
+[32m+[m	[32mpublic static void main(String[] args) throws Exception {[m
+[32m+[m		[32m//Fazer uma conexão HTTP - protocolo de comunicação.[m
+[32m+[m		[32m// e Buscar os tops 250 filmes[m
+[32m+[m[41m		[m
+[32m+[m		[32mString url = "https://imdb-api.com/en/API/Top250Movies/k_x71r9ae5";[m
+[32m+[m		[32mURI endereco = URI.create(url); // transforma uma Url em uma URI[m
+[32m+[m		[32mvar client = HttpClient.newHttpClient(); // cria um cliente[m
+[32m+[m		[32mvar request = HttpRequest.newBuilder(endereco).GET().build();[m
+[32m+[m		[32mHttpResponse<String> response = client.send(request, BodyHandlers.ofString());[m
+[32m+[m		[32mString body = response.body();[m
+[32m+[m		[32m//System.out.println(body);[m
+[32m+[m
+[32m+[m		[32m// pegar só os dados que intessam(Titulo, o poste(imagem) e Rank)[m
+[32m+[m		[32mJsonParser parser = new JsonParser();[m
+[32m+[m		[32mList<Map<String, String>> listaDeFilmes = parser.parse(body);[m
+[32m+[m[41m		[m
+[32m+[m[41m		[m
+[32m+[m		[32m//Exibir e manipular dados[m
+[32m+[m		[32mfor (Map<String, String> filme : listaDeFilmes) {[m
+[32m+[m[41m			[m
+[32m+[m			[32mString ulrImagem = filme.get("image");[m
+[32m+[m			[32mString titulo = filme.get("title");[m
+[32m+[m[32m//[m[41m			[m
+[32m+[m[32m//			InputStream inputStream = new URL(ulrImagem).openStream();[m
+[32m+[m[32m//			String nomeArquivo ="saida/"+ titulo + ".png";[m
+[32m+[m[32m//[m[41m			[m
+[32m+[m[32m//[m[41m			[m
+[32m+[m[32m//			var geradora = new GeradoraDeFigurinhas();[m
+[32m+[m[32m//			geradora.cria(inputStream, nomeArquivo);[m
+[32m+[m[41m			[m
+[32m+[m			[32mSystem.out.println(titulo);[m
+[32m+[m			[32mSystem.out.println();[m[41m	[m
+[32m+[m		[32m}[m
+[32m+[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m[32m}[m
+[1mdiff --git a/GeradoraDeFigurinhas.java b/GeradoraDeFigurinhas.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ba51106[m
+[1m--- /dev/null[m
+[1m+++ b/GeradoraDeFigurinhas.java[m
+[36m@@ -0,0 +1,54 @@[m
+[32m+[m[32mpackage br.com.modelo;[m
+[32m+[m
+[32m+[m[32mimport java.awt.Color;[m
+[32m+[m[32mimport java.awt.Font;[m
+[32m+[m[32mimport java.awt.Graphics2D;[m
+[32m+[m[32mimport java.awt.Stroke;[m
+[32m+[m[32mimport java.awt.image.BufferedImage;[m
+[32m+[m[32mimport java.io.File;[m
+[32m+[m[32mimport java.io.InputStream;[m
+[32m+[m[32mimport java.net.URL;[m
+[32m+[m
+[32m+[m[32mimport javax.imageio.ImageIO;[m
+[32m+[m
+[32m+[m[32mpublic class GeradoraDeFigurinhas {[m
+[32m+[m[41m	[m
+[32m+[m	[32mpublic void cria() throws Exception {[m
+[32m+[m		[32m// leitura da imagem[m
+[32m+[m		[32m//InputStream inputStream = new FileInputStream(new File("Entrada/filme.jpg"));[m
+[32m+[m		[32mInputStream inputStream = new URL("https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@.jpg").openStream();[m
+[32m+[m		[32mBufferedImage imagemOriginal = ImageIO.read(inputStream);[m
+[32m+[m[41m		[m
+[32m+[m		[32m//Cria nova imagem em memória com  transparência e com novo tamanho[m
+[32m+[m[41m		[m
+[32m+[m		[32mint largura = imagemOriginal.getWidth();[m
+[32m+[m		[32mint altura = imagemOriginal.getHeight();[m
+[32m+[m		[32mint novaAltura = altura + 200;[m
+[32m+[m		[32mBufferedImage novaImagem = new BufferedImage(largura, novaAltura, BufferedImage.TRANSLUCENT);[m
+[32m+[m[41m		[m
+[32m+[m		[32m//copiar a imagem original para nova imagem em memoria[m
+[32m+[m		[32mGraphics2D graphics = (Graphics2D)novaImagem.getGraphics();[m
+[32m+[m		[32mgraphics.drawImage(imagemOriginal, 0, 0, null);[m
+[32m+[m[41m		[m
+[32m+[m		[32m// configura a fonte[m
+[32m+[m		[32mvar fonte = new Font(Font.SERIF, Font.BOLD, 100);[m
+[32m+[m		[32mgraphics.setColor(Color.GREEN);[m
+[32m+[m[41m		[m
+[32m+[m		[32mgraphics.setFont(fonte);[m
+[32m+[m		[32m//graphics.setStroke((Stroke) fonte);[m
+[32m+[m[41m		[m
+[32m+[m		[32m// Escrever uma frase na imagem[m
+[32m+[m[41m		[m
+[32m+[m		[32mgraphics.drawString("ESSE FILME", 50, novaAltura-120);[m
+[32m+[m		[32mgraphics.drawString(" É TOP+++", 100, novaAltura-10);[m
+[32m+[m[41m		[m
+[32m+[m		[32m//Escrever a nova imagem em um arquivo[m
+[32m+[m		[32mImageIO.write(novaImagem, "png", new File("saida/figurinha.png"));[m
+[32m+[m[41m		[m
+[32m+[m	[32m}[m
+[32m+[m[41m	[m
+[32m+[m	[32mpublic static void main(String[] args) throws Exception {[m
+[32m+[m		[32mGeradoraDeFigurinhas geradora =  new GeradoraDeFigurinhas();[m
+[32m+[m		[32mgeradora.cria();[m
+[32m+[m	[32m}[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/JsonParser.java b/JsonParser.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1524010[m
+[1m--- /dev/null[m
+[1m+++ b/JsonParser.java[m
+[36m@@ -0,0 +1,44 @@[m
+[32m+[m[32mpackage br.com.modelo;[m
+[32m+[m
+[32m+[m[32mimport java.util.ArrayList;[m
+[32m+[m[32mimport java.util.HashMap;[m
+[32m+[m[32mimport java.util.List;[m
+[32m+[m[32mimport java.util.Map;[m
+[32m+[m[32mimport java.util.regex.Matcher;[m
+[32m+[m[32mimport java.util.regex.Pattern;[m
+[32m+[m
+[32m+[m[32mpublic class JsonParser {[m
+[32m+[m[41m	[m
+[32m+[m	[32mprivate static final Pattern REGEX_ITEMS = Pattern.compile(".*\\[(.+)\\].*");[m
+[32m+[m[32m    private static final Pattern REGEX_ATRIBUTOS_JSON = Pattern.compile("\"(.+?)\":\"(.*?)\"");[m
+[32m+[m[41m    [m
+[32m+[m[32m    public List<Map<String, String>> parse(String json) {[m
+[32m+[m
+[32m+[m[32m        Matcher matcher = REGEX_ITEMS.matcher(json);[m
+[32m+[m[32m        if (!matcher.find()) {[m
+[32m+[m
+[32m+[m[32m            throw new IllegalArgumentException("Não encontrou itens.");[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        String[] items = matcher.group(1).split("\\},\\{");[m
+[32m+[m
+[32m+[m[32m        List<Map<String, String>> dados = new ArrayList<>();[m
+[32m+[m
+[32m+[m[32m        for (String item : items) {[m
+[32m+[m
+[32m+[m[32m            Map<String, String> atributosItem = new HashMap<>();[m
+[32m+[m
+[32m+[m[32m            Matcher matcherAtributosJson = REGEX_ATRIBUTOS_JSON.matcher(item);[m
+[32m+[m[32m            while (matcherAtributosJson.find()) {[m
+[32m+[m[32m                String atributo = matcherAtributosJson.group(1);[m
+[32m+[m[32m                String valor = matcherAtributosJson.group(2);[m
+[32m+[m[32m                atributosItem.put(atributo, valor);[m
+[32m+[m[32m            }[m
+[32m+[m
+[32m+[m[32m            dados.add(atributosItem);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        return dados;[m
+[32m+[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
