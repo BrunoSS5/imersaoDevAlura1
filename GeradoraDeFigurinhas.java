@@ -13,10 +13,10 @@ import javax.imageio.ImageIO;
 
 public class GeradoraDeFigurinhas {
 	
-	public void cria() throws Exception {
+	public void cria(InputStream inputStream, String nomeArquivo) throws Exception {
 		// leitura da imagem
 		//InputStream inputStream = new FileInputStream(new File("Entrada/filme.jpg"));
-		InputStream inputStream = new URL("https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@.jpg").openStream();
+		//InputStream inputStream = new URL("https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@.jpg").openStream();
 		BufferedImage imagemOriginal = ImageIO.read(inputStream);
 		
 		//Cria nova imagem em memória com  transparência e com novo tamanho
@@ -31,7 +31,7 @@ public class GeradoraDeFigurinhas {
 		graphics.drawImage(imagemOriginal, 0, 0, null);
 		
 		// configura a fonte
-		var fonte = new Font(Font.SERIF, Font.BOLD, 100);
+		var fonte = new Font(Font.SERIF, Font.BOLD, 80);
 		graphics.setColor(Color.GREEN);
 		
 		graphics.setFont(fonte);
@@ -39,16 +39,11 @@ public class GeradoraDeFigurinhas {
 		
 		// Escrever uma frase na imagem
 		
-		graphics.drawString("ESSE FILME", 50, novaAltura-120);
+		graphics.drawString("ESSE FILME", 50, novaAltura-100);
 		graphics.drawString(" É TOP+++", 100, novaAltura-10);
 		
 		//Escrever a nova imagem em um arquivo
-		ImageIO.write(novaImagem, "png", new File("saida/figurinha.png"));
-		
-	}
-	
-	public static void main(String[] args) throws Exception {
-		GeradoraDeFigurinhas geradora =  new GeradoraDeFigurinhas();
-		geradora.cria();
+		//ImageIO.write(novaImagem, "png", new File("saida/figurinha.png"));
+		ImageIO.write(novaImagem, "png", new File(nomeArquivo));
 	}
 }
